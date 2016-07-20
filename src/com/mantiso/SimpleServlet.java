@@ -3,6 +3,7 @@ package com.mantiso;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -20,8 +21,12 @@ public class SimpleServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		resp.getWriter().println("Hello world");
 		
-		String name = req.getParameter("name");
+		String forwardingServlet = "/main.jsp";
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(forwardingServlet);
+		dispatcher.forward(req, resp);
+		/*String name = req.getParameter("name");
 		
 		if (name != null){
 			resp.getWriter().printf("Name: %s\n", name);
@@ -30,7 +35,7 @@ public class SimpleServlet extends HttpServlet {
 			resp.getWriter().write("Please enter a name.");
 		}
 		
-		resp.getWriter().write(LocalDateTime.now().toString());
+		resp.getWriter().write(LocalDateTime.now().toString());*/
 	}
 	
 	@Override

@@ -1,7 +1,7 @@
 package com.mantiso;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.Calendar;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/home", "*.do"})
+@WebServlet(urlPatterns = {"/main"})
 public class SimpleServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -21,21 +21,13 @@ public class SimpleServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		resp.getWriter().println("Hello world");
+		String[] days = {"Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+		int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 		
-		String forwardingServlet = "/main.jsp";
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(forwardingServlet);
+		String message = "Welcome, today is " + days[day];
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/main.jsp");
+		req.setAttribute("message", message);
 		dispatcher.forward(req, resp);
-		/*String name = req.getParameter("name");
-		
-		if (name != null){
-			resp.getWriter().printf("Name: %s\n", name);
-		} 
-		else {
-			resp.getWriter().write("Please enter a name.");
-		}
-		
-		resp.getWriter().write(LocalDateTime.now().toString());*/
 	}
 	
 	@Override
